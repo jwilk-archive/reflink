@@ -41,6 +41,7 @@ int main(int argc, char **argv)
     rc = linkat(AT_FDCWD, dst_fd_path, AT_FDCWD, dst, AT_SYMLINK_FOLLOW);
     if (rc < 0)
         err(EXIT_FAILURE, "linkat(..., \"%s\", ...)", dst);
+    return EXIT_SUCCESS;
 }
 
 /* vim:set ts=4 sts=4 sw=4 et: */
