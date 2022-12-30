@@ -42,8 +42,10 @@ int main(int argc, char **argv)
     int dst_fd = open(dst_dir, O_TMPFILE | O_RDWR | O_LARGEFILE, S_IRUSR | S_IWUSR);
     if (dst_fd < 0)
         err(EXIT_FAILURE, "open(\"%s\", O_TMPFILE...)", dst_dir);
-    char dst_fd_path[PATH_MAX];
-    snprintf(dst_fd_path, sizeof dst_fd_path, "/proc/self/fd/%d", dst_fd);
+    char dst_fd_path[25];
+    int n = sprintf(dst_fd_path, "/proc/self/fd/%d", dst_fd);
+    if (n < 0)
+        err(EXIT_FAILURE, "sprintf()");
     int rc = ioctl(dst_fd, FICLONE, src_fd);
     if (rc < 0)
         err(EXIT_FAILURE, "ioctl(..., FICLONE, ...)");
