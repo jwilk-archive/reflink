@@ -15,11 +15,20 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
+static void usage(FILE *fp)
+{
+    fprintf(fp, "Usage: reflink SRC DST\n");
+}
+
 int main(int argc, char **argv)
 {
+    if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
+        usage(stdout);
+        return EXIT_SUCCESS;
+    }
     if (argc != 3) {
-        fprintf(stderr, "Usage: %s SRC DST\n", argv[0]);
-        exit(1);
+        usage(stderr);
+        return EXIT_FAILURE;
     }
     const char *src = argv[1];
     int src_fd = open(src, O_RDONLY | O_LARGEFILE);
