@@ -42,6 +42,8 @@ int main(int argc, char **argv)
     int dst_fd = open(dst_dir, O_TMPFILE | O_RDWR | O_LARGEFILE, S_IRUSR | S_IWUSR);
     if (dst_fd < 0)
         err(EXIT_FAILURE, "open(\"%s\", O_TMPFILE...)", dst_dir);
+    free(dst2);
+    dst_dir = dst2 = NULL;
     char dst_fd_path[25];
     int n = sprintf(dst_fd_path, "/proc/self/fd/%d", dst_fd);
     if (n < 0)
